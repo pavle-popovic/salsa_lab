@@ -1,0 +1,15 @@
+pydantic-settings
+output
+sqlalchemy
+enum
+pydantic
+fastapi
+python-jose[cryptography]
+
+database
+user
+course
+stripe
+passlib[bcrypt]
+boto3
+botocore

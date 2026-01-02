@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mambolab_db
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - mambolab_network
+
+  backend:
+    build:
+      context: .
+      dockerfile: output/backend/Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql://user:password@db/mambolab_db
+      # Add other environment variables as needed, e.g., SECRET_KEY, S3_BUCKET, STRIPE_SECRET_KEY
+    depends_on:
+      - db
+    networks:
+      - mambolab_network
+
+  frontend:
+    build:
+      context: .
+      dockerfile: output/frontend/Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - mambolab_network
+
+volumes:
+  db_data:
+
+networks:
+  mambolab_network:
+    driver: bridge
