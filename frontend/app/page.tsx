@@ -1,0 +1,160 @@
+"use client";
+
+import { useEffect } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import NavBar from "@/components/NavBar";
+import Footer from "@/components/Footer";
+import { useAuth } from "@/contexts/AuthContext";
+
+export default function HomePage() {
+  const { user } = useAuth();
+
+  useEffect(() => {
+    // Initialize AOS if available
+    if (typeof window !== "undefined" && (window as any).AOS) {
+      (window as any).AOS.init({
+        once: true,
+        offset: 100,
+      });
+    }
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-mambo-dark">
+      <NavBar user={user || undefined} />
+
+      <header className="relative h-screen flex items-center justify-center">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="hero-video opacity-60"
+        >
+          <source src="/assets/Background_video.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-black/40 gradient-overlay" />
+
+        <div className="relative z-10 text-center px-4 max-w-4xl pt-20">
+          <div className="inline-block px-4 py-1 rounded-full border border-white/20 bg-black/30 backdrop-blur-md text-xs font-bold tracking-widest mb-8">
+            ONLINE SALSA ACADEMY
+          </div>
+          <h1 className="text-6xl md:text-8xl font-extrabold tracking-tight leading-tight mb-8">
+            Turn the Dancefloor<br />Into Your Playground.
+          </h1>
+          <p className="text-xl text-gray-200 mb-12 max-w-2xl mx-auto font-light">
+            Structured courses. Real feedback. <br />
+            Stop memorizing steps—start mastering the game.
+          </p>
+          <div className="flex flex-col md:flex-row justify-center gap-4">
+            <Link
+              href="/courses"
+              className="px-8 py-4 bg-mambo-blue hover:bg-blue-600 text-white font-bold rounded-full transition shadow-lg shadow-blue-500/25 flex items-center justify-center gap-2"
+            >
+              Start Level 1
+            </Link>
+            <Link
+              href="#about"
+              className="px-8 py-4 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/10 rounded-full font-bold transition"
+            >
+              How It Works
+            </Link>
+          </div>
+        </div>
+
+        <div className="absolute bottom-10 animate-bounce text-gray-500">
+          <svg
+            className="w-6 h-6 mx-auto"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M19 14l-7 7m0 0l-7-7m7 7V3"
+            />
+          </svg>
+        </div>
+      </header>
+
+      <section id="about" className="py-40 px-6 max-w-7xl mx-auto">
+        <div className="grid md:grid-cols-2 gap-20 items-center">
+          <div className="relative">
+            <div className="absolute -inset-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl opacity-30 blur-xl" />
+            <Image
+              src="/assets/Mambo_image_1.png"
+              alt="Dancer"
+              width={600}
+              height={400}
+              className="relative rounded-2xl shadow-2xl border border-gray-800"
+            />
+            <div className="absolute -bottom-6 -right-6 bg-gray-900 p-4 rounded-xl border border-gray-700 shadow-xl flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center text-black font-bold">
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path
+                    fillRule="evenodd"
+                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </div>
+              <div>
+                <div className="text-xs text-gray-400 font-bold uppercase">Streak</div>
+                <div className="text-sm font-bold text-mambo-text">
+                  {user?.streak_count || 0} Days Active
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h2 className="text-4xl font-bold mb-8 text-mambo-text">
+              Don&apos;t just watch.<br />
+              <span className="text-mambo-blue">Play the game.</span>
+            </h2>
+            <p className="text-gray-400 text-lg mb-10 leading-relaxed">
+              Most online courses leave you lonely. At The Mambo Inn, every step is a level.
+              Every combo is a boss battle. Track your XP, earn badges, and get verified
+              feedback from our instructors.
+            </p>
+
+            <div className="space-y-8">
+              <div className="flex gap-5">
+                <div className="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center text-mambo-blue shrink-0">
+                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="font-bold text-lg text-mambo-text">Structured Worlds</h3>
+                  <p className="text-gray-500 text-sm">
+                    No random videos. A clear path from Beginner to Pro.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex gap-5">
+                <div className="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center text-mambo-gold shrink-0">
+                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="font-bold text-lg text-mambo-text">Earn Your Rank</h3>
+                  <p className="text-gray-500 text-sm">
+                    Unlock advanced styling only when you master the basics.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <Footer />
+    </div>
+  );
+}
